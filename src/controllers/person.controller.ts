@@ -1,47 +1,50 @@
-/* import { Handler, Request, Response } from "express";
+import { Handler, Request, Response } from "express";
 import { PersonRepository } from "../repository/person.repository.js";
 import { Person } from "../model/person.model.js";
+import { DetailedPerson } from "../model/dto/DetailedPerson.model.js";
+import { TarefaRepository } from "../repository/tarefa.repository.js";
+import { StatusRepository } from "../repository/status.repository.js";
+import { Tarefa } from "../model/Tarefa.model.js";
+import { DetailedTarefa } from "../model/dto/DetailedTarefa.model.js";
 export class PersonController {
 
-    private personRepository: PersonRepository = null;
+    private personRepository: PersonRepository;
+    private tarefaRepository: TarefaRepository;
+    private statusRepository: StatusRepository;
 
-    constructor(
-        personRepository: PersonRepository,
-    ) {
+    constructor(personRepository: PersonRepository, tarefaRepository: TarefaRepository, statusRepository: StatusRepository) {
         this.personRepository = personRepository
+        this.tarefaRepository = tarefaRepository
+        this.statusRepository = statusRepository
     }
 
     findPersons(): Handler {
-        const completePersonWithDetails = async (
-            person: Person
-        ): Promise<DetailedPerson> => {
+        const completePersonWithDetails = async (person: Person, statusDesc: string): Promise<DetailedPerson> => {
             const result: DetailedPerson = {
                 ...person,
-                contacts: []
+                tarefas: []
             }
 
-            const contacts = await this.contactRepository.findContacts(
-                person.id
-            )
-
-            contacts.forEach(contact => {
-                result.contacts.push({
-                    type: contact.type,
-                    value: contact.value,
+            const tarefas = await this.tarefaRepository.findTarefaByPersonId(person.id_person)
+           
+            tarefas.forEach(tarefa => {
+                result.tarefas.push({
+                   titulo: tarefa.titulo,
+                   descricao: tarefa.descricao,
+                   data: tarefa.data,
+                   status: /* Ananalizar como obter os status */,
                 })
             })
-
             return result
         }
 
         return async (req :Request, res: Response) => {
-            const { firstName, lastName, company, address } = req.query
+            const { firstName, lastName, email } = req.query
 
             const persons = await this.personRepository.findPersons(
                 <string>firstName,
                 <string>lastName,
-                <string>company,
-                <string>address,
+                <string>email,
             );
 
             const result: DetailedPerson[] = []
@@ -56,31 +59,33 @@ export class PersonController {
 
     addPerson(): Handler {
         return async (req: Request, res: Response) => {
-            const person: DetailedPerson = req.body
+            const person: Person = req.body
 
             const personId = await this.personRepository.addPerson(person)
-
-            person.contacts.forEach(async contact => {
-                await this.contactRepository.addContact({
-                    // type: contact.type,
-                    // value: contact.value,
-                    ...contact,
-                    personId: personId
-                })
-            });
 
             res.status(201).json({ id: personId })
         }
     }
 
+    addTarefa(): Handler{
+        /* Ainda por implementar o add tarefa e analisar o mesmo */
+        return async (req: Request, res:Response)=>{
+            const tarefa : Tarefa = req.body
+
+            const tarefaId = await this.tarefaRepository.addTarefa(tarefa)
+
+            const result: DetailedPerson[] = []
+
+        }
+    }
     deletePerson(): Handler {
         return async (req: Request, res: Response) => {
             const personId = parseInt(req.params.personId)
 
-            await this.contactRepository.deleteContacts(personId)
+            await this.tarefaRepository.deleteTarefas(personId)
             await this.personRepository.deletePerson(personId)
 
             res.status(200).json()
         }
     }
-} */
+} 

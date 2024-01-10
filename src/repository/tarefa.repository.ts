@@ -7,24 +7,8 @@ export class TarefaRepository {
     constructor(db: Database) {
         this.db = db;
     }
-        /*
-            tarefaId? : number
-            titulo: string
-            descricao: string
-            data: Date
-            statusId?: number
-            personId?: number
-  id_tarefa INTEGER PRIMARY KEY,
-    titulo VARCHAR(255) NOT NULL,
-    descricao VARCHAR(255),
-    data_tarefa DATE NOT NULL,
-    status_id INTEGER,
-    person_id INTEGER,
-    FOREIGN KEY (person_id) REFERENCES pessoas(id),
-    FOREIGN KEY (status_id) REFERENCES 'status'(id_status)
-        */
 
-    async findTarefaById(personId: number) {
+    async findTarefaByPersonId(personId: number | undefined) {
         const tarefas = await this.db.all('SELECT * FROM TAREFA Where person_id = ?', personId);
 
         return tarefas.map((record) :Tarefa => {
@@ -51,10 +35,10 @@ export class TarefaRepository {
         return newTarefa.lastID;
     }
 
-    async deleteTarefas6(tarefaId: number) {
+    async deleteTarefas(personId: number) {
         await this.db.run(
-            "DELETE FROM tarefa WHERE id_tarefa = ?",
-            tarefaId
+            "DELETE FROM tarefa WHERE person_id = ?",
+            personId
         )
     }
 
