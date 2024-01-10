@@ -8,13 +8,14 @@ export class StatusRepository {
         this.db = db;
     }
 
+    async findStatusById(tarefaId: number) {
+        const status = await this.db.all('SELECT * FROM status Where ');
 
-    async findStatus() {
-
-    }
-
-    async findStatusById(statusId: number) {
-
+        return status.map((record) :Status => {
+            return {
+               //
+            }
+        })
     }
 
     async addStatus(status: Status) {
