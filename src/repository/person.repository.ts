@@ -38,7 +38,7 @@ export class PersonRepository {
 
         return records.map((record): Person => {
             return {
-                id: record.id,
+                id_person: record.id,
                 firstName: record.first_name,
                 lastName: record.last_name,
                 email: record.email

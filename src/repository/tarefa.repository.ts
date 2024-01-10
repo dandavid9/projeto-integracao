@@ -25,7 +25,7 @@ export class TarefaRepository {
         */
 
     async findTarefaById(personId: number) {
-        const tarefas = await this.db.get('SELECT * FROM TAREFA Where person_id = ?', personId);
+        const tarefas = await this.db.all('SELECT * FROM TAREFA Where person_id = ?', personId);
 
         return tarefas.map((record) :Tarefa => {
             return {
@@ -40,11 +40,22 @@ export class TarefaRepository {
     }
 
     async addTarefa(tarefa: Tarefa) {
+        const newTarefa = await this.db.run("Insert into tarefa (titulo, descricao, data, statusId, personId)" +
+        "Values (?,?,?,?,?);",
+        tarefa.titulo,
+        tarefa.descricao,
+        tarefa.data,
+        tarefa.statusId,
+        tarefa.personId);
 
+        return newTarefa.lastID;
     }
 
-    async deleteTarefas(tarefaId: number) {
-
+    async deleteTarefas6(tarefaId: number) {
+        await this.db.run(
+            "DELETE FROM tarefa WHERE id_tarefa = ?",
+            tarefaId
+        )
     }
 
     /*

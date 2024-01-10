@@ -1,4 +1,4 @@
 export interface Status {
-    statusId? : number
+    idStatus? : number
     statusDesc: string
 }
