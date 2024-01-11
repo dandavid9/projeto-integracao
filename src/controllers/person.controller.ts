@@ -19,7 +19,7 @@ export class PersonController {
     }
 
     findPersons(): Handler {
-        const completePersonWithDetails = async (person: Person, statusDesc: string): Promise<DetailedPerson> => {
+        const completePersonWithDetails = async (person: Person): Promise<DetailedPerson> => {
             const result: DetailedPerson = {
                 ...person,
                 tarefas: []
@@ -27,14 +27,16 @@ export class PersonController {
 
             const tarefas = await this.tarefaRepository.findTarefaByPersonId(person.id_person)
            
-            tarefas.forEach(tarefa => {
+            for(const tarefa of tarefas ) {
+                const status = await this.statusRepository.findStatusById(tarefa.statusId)
                 result.tarefas.push({
                    titulo: tarefa.titulo,
                    descricao: tarefa.descricao,
                    data: tarefa.data,
-                   status: /* Ananalizar como obter os status */,
+                   status: status.map(state => state.statusDesc),
+                   /* Ananalizar como obter os status */
                 })
-            })
+            }
             return result
         }
 
@@ -67,17 +69,7 @@ export class PersonController {
         }
     }
 
-    addTarefa(): Handler{
-        /* Ainda por implementar o add tarefa e analisar o mesmo */
-        return async (req: Request, res:Response)=>{
-            const tarefa : Tarefa = req.body
-
-            const tarefaId = await this.tarefaRepository.addTarefa(tarefa)
-
-            const result: DetailedPerson[] = []
-
-        }
-    }
+ 
     deletePerson(): Handler {
         return async (req: Request, res: Response) => {
             const personId = parseInt(req.params.personId)

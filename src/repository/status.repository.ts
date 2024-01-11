@@ -8,7 +8,7 @@ export class StatusRepository {
         this.db = db;
     }
 
-    async findStatusById(id_status: number | undefined) {
+    async findStatusById(id_status: number | undefined){
         const status = await this.db.all('SELECT * FROM status Where id_status = ? ', id_status );
 
         return status.map((record) :Status => {

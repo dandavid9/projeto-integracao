@@ -1,5 +1,5 @@
 export interface Tarefa {
-    tarefaId? : number
+    tarefasId? : number
     titulo: string
     descricao: string
     data: Date
