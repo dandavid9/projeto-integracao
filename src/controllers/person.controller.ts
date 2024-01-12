@@ -33,7 +33,11 @@ export class PersonController {
                    titulo: tarefa.titulo,
                    descricao: tarefa.descricao,
                    data: tarefa.data,
-                   status: status.map(state => state.statusDesc),
+                   status: {
+                    idStatus: status[0].idStatus,
+                    statusDesc: status[0].statusDesc
+                },
+                statusId: tarefa.statusId  
                    /* Ananalizar como obter os status */
                 })
             }

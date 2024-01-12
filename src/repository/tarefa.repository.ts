@@ -17,6 +17,7 @@ export class TarefaRepository {
                 titulo : record.titulo,
                 descricao : record.descricao,
                 data: record.data_tarefa,
+                statusId: record.statusId
             }
         })
     }

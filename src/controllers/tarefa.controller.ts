@@ -12,17 +12,6 @@ export class TarefaController{
         this.statusRepository = statusRepository
     }
 
-    findTarefaByPerson():Handler{
-        return (req:Request, res:Response) => {
-            const personId = req.params
-
-            const tarefas = this.tarefaRepository.findTarefaByPersonId(personId)
-
-            tarefas.forEach(tarefa => {
-                
-            });
-        }
-    }
     addTarefa(): Handler{
         /* Ainda por implementar o add tarefa e analisar o mesmo */
         return async (req: Request, res:Response)=>{

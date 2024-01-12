@@ -3,6 +3,6 @@ export interface Tarefa {
     titulo: string
     descricao: string
     data: Date
-    statusId?: number
+    statusId: number
     personId?: number
 }
