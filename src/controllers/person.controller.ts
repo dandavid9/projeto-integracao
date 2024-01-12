@@ -4,8 +4,7 @@ import { Person } from "../model/person.model.js";
 import { DetailedPerson } from "../model/dto/DetailedPerson.model.js";
 import { TarefaRepository } from "../repository/tarefa.repository.js";
 import { StatusRepository } from "../repository/status.repository.js";
-import { Tarefa } from "../model/Tarefa.model.js";
-import { DetailedTarefa } from "../model/dto/DetailedTarefa.model.js";
+
 export class PersonController {
 
     private personRepository: PersonRepository;
@@ -78,7 +77,7 @@ export class PersonController {
         return async (req: Request, res: Response) => {
             const personId = parseInt(req.params.personId)
 
-            await this.tarefaRepository.deleteTarefas(personId)
+            await this.tarefaRepository.deleteTarefasByPerson(personId)
             await this.personRepository.deletePerson(personId)
 
             res.status(200).json()

@@ -9,35 +9,41 @@ export class TarefaRepository {
     }
 
     async findTarefaByPersonId(personId: number | undefined) {
-        const tarefas = await this.db.all('SELECT * FROM TAREFA Where person_id = ?', personId);
+        const records = await this.db.all('SELECT * FROM TAREFA Where person_id = ?', personId);
 
-        return tarefas.map((record) :Tarefa => {
+        return records.map((record) :Tarefa => {
             return {
                 tarefasId : record.id_tarefa,
                 titulo : record.titulo,
                 descricao : record.descricao,
                 data: record.data_tarefa,
-                statusId: record.statusId
+                statusId: record.status_id
             }
         })
     }
 
-    async addTarefa(tarefa: Tarefa, personId) {
-        const newTarefa = await this.db.run("Insert into tarefa (titulo, descricao, data, statusId, personId)" +
-        "Values (?,?,?,?,?);",
+    async addTarefa(personId, tarefa: Tarefa) {
+        const newTarefa = await this.db.run("Insert into tarefa (titulo, descricao, data_tarefa, person_id)" +
+        " values (?,?,?,?);",
         tarefa.titulo,
         tarefa.descricao,
         tarefa.data,
-        1,
         personId);
 
         return newTarefa.lastID;
     }
 
-    async deleteTarefas(personId: number) {
+    async deleteTarefasByPerson(personId: number) {
         await this.db.run(
             "DELETE FROM tarefa WHERE person_id = ?",
             personId
+        )
+    }
+
+    async deleteTarefas(tarefaId: number) {
+        await this.db.run(
+            "DELETE FROM tarefa WHERE id_tarefa = ?",
+            tarefaId
         )
     }
 

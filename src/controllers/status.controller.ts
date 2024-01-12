@@ -2,7 +2,7 @@ import { Handler, Request, Response } from "express";
 import { StatusRepository } from "../repository/status.repository";
 import { Status } from "../model/status.model";
 
-export class TarefaController{
+export class StatusController{
     private statusRepository: StatusRepository;
 
     constructor(statusRepository:StatusRepository){

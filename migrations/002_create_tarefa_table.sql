@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS tarefa (
     data_tarefa DATE NOT NULL,
     status_id INTEGER,
     person_id INTEGER,
-    FOREIGN KEY (person_id) REFERENCES pessoas(id),
+    FOREIGN KEY (person_id) REFERENCES person(id_person),
     FOREIGN KEY (status_id) REFERENCES 'status'(id_status)
 
 );

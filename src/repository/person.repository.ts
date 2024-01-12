@@ -16,7 +16,7 @@ export class PersonRepository {
     ): Promise<Person[]> {
         const params: string[] = [];
 
-        let q = "SELECT id, first_name, last_name, email " +
+        let q = "SELECT id_person, first_name, last_name, email " +
         "FROM person WHERE 1=1";
 
         if (firstNameLike) {
@@ -38,7 +38,7 @@ export class PersonRepository {
 
         return records.map((record): Person => {
             return {
-                id_person: record.id,
+                id_person: record.id_person,
                 firstName: record.first_name,
                 lastName: record.last_name,
                 email: record.email
@@ -61,7 +61,7 @@ export class PersonRepository {
 
     async deletePerson(personId: number) {
         await this.db.run(
-            "DELETE FROM person WHERE id = ?",
+            "DELETE FROM person WHERE id_person = ?",
             personId
         )
     }
