@@ -1,5 +1,5 @@
 export interface Person {
-    id_person?: number
+    idPerson?: number
     firstName: string
     lastName: string
     email: string

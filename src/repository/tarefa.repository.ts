@@ -13,24 +13,25 @@ export class TarefaRepository {
 
         return records.map((record) :Tarefa => {
             return {
-                tarefasId : record.id_tarefa,
+                idTarefa : record.id_tarefa,
                 titulo : record.titulo,
                 descricao : record.descricao,
                 data: record.data_tarefa,
                 statusId: record.status_id
+                
             }
         })
     }
 
-    async addTarefa(personId, tarefa: Tarefa) {
-        const newTarefa = await this.db.run("Insert into tarefa (titulo, descricao, data_tarefa, person_id)" +
-        " values (?,?,?,?);",
+    async addTarefa(tarefa: Tarefa, personId): Promise<number | undefined> {
+        const result = await this.db.run("Insert into tarefa (titulo, descricao, data_tarefa, status_id, person_id)" +
+        " values (?, ?, ?, ?, ?)",
         tarefa.titulo,
         tarefa.descricao,
         tarefa.data,
+        tarefa.statusId,
         personId);
-
-        return newTarefa.lastID;
+        return result.lastID;
     }
 
     async deleteTarefasByPerson(personId: number) {

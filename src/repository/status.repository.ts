@@ -40,9 +40,8 @@ export class StatusRepository {
         await this.db.run("DELETE FROM status WHERE id_status = ?", statusId)
     }
 
-    /*
     async updateStatus(statusId: number){
-        
+        await this.db.run("DELETE FROM status WHERE id_status = ?", statusId)
     }
-    */
+
 }

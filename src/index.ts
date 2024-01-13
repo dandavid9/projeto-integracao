@@ -1,11 +1,11 @@
 import database from "./persistence/database.js";
 import express from "express";
 import { PersonRepository } from "./repository/person.repository.js";
-import { PersonController } from "./controllers/person.controller.js";
+import { PersonController } from "./controller/person.controller.js";
 import { TarefaRepository } from "./repository/tarefa.repository.js";
-import { TarefaController } from "./controllers/tarefa.controller.js";
+import { TarefaController } from "./controller/tarefa.controller.js";
 import { StatusRepository } from "./repository/status.repository.js";
-import { StatusController } from "./controllers/status.controller.js";
+import { StatusController } from "./controller/status.controller.js";
 
 console.log("💾 Connecting to database");
 const db = await database.connectDatabase()
@@ -38,7 +38,7 @@ api.get("/person", personController.findPersons())
 api.post("/person", personController.addPerson())
 api.delete("/person/:personId", personController.deletePerson())
 //api.get("/tarefa", tarefaController.findTarefas())
-api.post("/tarefa/:personId", tarefaController.addTarefa())
+api.post("/person/:personId/tarefa", tarefaController.addTarefa())
 api.delete("/tarefa/:tarefaId", tarefaController.deleteTarefa())
 //api.get("/status", statusController.findStatus())
 api.post("/status", statusController.addStatus())

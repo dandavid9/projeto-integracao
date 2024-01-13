@@ -1,4 +1,1 @@
-
-
-
 SELECT * from tarefa

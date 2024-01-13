@@ -1,8 +1,8 @@
 export interface Tarefa {
-    tarefasId? : number
+    idTarefa? : number
     titulo: string
     descricao: string
     data: Date
-    statusId: number
+    statusId?: number
     personId?: number
 }

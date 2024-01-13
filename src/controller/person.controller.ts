@@ -24,26 +24,27 @@ export class PersonController {
                 tarefas: []
             }
 
-            const tarefas = await this.tarefaRepository.findTarefaByPersonId(person.id_person)
-           
-            for(const tarefa of tarefas ) {
-                const status = await this.statusRepository.findStatusById(tarefa.statusId)
-                result.tarefas.push({
-                   titulo: tarefa.titulo,
-                   descricao: tarefa.descricao,
-                   data: tarefa.data,
-                   status: {
-                    idStatus: status[0].idStatus,
-                    statusDesc: status[0].statusDesc
-                },
-                statusId: tarefa.statusId  
-                   /* Ananalizar como obter os status */
-                })
-            }
+            const tarefas = await this.tarefaRepository.findTarefaByPersonId(person.idPerson)
+
+            result.tarefas = await Promise.all(tarefas.map(async tarefa => {
+                const status = await this.statusRepository.findStatusById(tarefa.statusId);
+        
+                return {
+                    id: tarefa.idTarefa,
+                    titulo: tarefa.titulo,
+                    descricao: tarefa.descricao,
+                    data: tarefa.data,
+                    status: {
+                        idStatus: status[0].idStatus,
+                        statusDesc: status[0].statusDesc
+                    }
+                };
+            }));
+
             return result
         }
 
-        return async (req :Request, res: Response) => {
+        return async (req: Request, res: Response) => {
             const { firstName, lastName, email } = req.query
 
             const persons = await this.personRepository.findPersons(
@@ -64,15 +65,21 @@ export class PersonController {
 
     addPerson(): Handler {
         return async (req: Request, res: Response) => {
-            const person: Person = req.body
+            const person: DetailedPerson = req.body
 
             const personId = await this.personRepository.addPerson(person)
+
+            person.tarefas.forEach(async tarefa => {
+                await this.tarefaRepository.addTarefa({
+                    ...tarefa
+                }, personId)
+            });
 
             res.status(201).json({ id: personId })
         }
     }
 
- 
+
     deletePerson(): Handler {
         return async (req: Request, res: Response) => {
             const personId = parseInt(req.params.personId)
@@ -80,7 +87,7 @@ export class PersonController {
             await this.tarefaRepository.deleteTarefasByPerson(personId)
             await this.personRepository.deletePerson(personId)
 
-            res.status(200).json()
+            res.status(200).json({ id: personId })
         }
     }
 } 

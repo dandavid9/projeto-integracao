@@ -1,6 +1,7 @@
 import { Handler, Request, Response } from "express";
 import { TarefaRepository } from "../repository/tarefa.repository";
 import { Tarefa } from "../model/Tarefa.model";
+import { DetailedTarefa } from "../model/dto/DetailedTarefa.model";
 
 export class TarefaController{
     private tarefaRepository: TarefaRepository;
@@ -10,12 +11,11 @@ export class TarefaController{
     }
 
     addTarefa(): Handler{
-        /* Ainda por implementar o add tarefa e analisar o mesmo */
         return async (req: Request, res:Response)=>{
-            const personId = req.params
-            const tarefa : Tarefa = req.body
+            const { personId } = req.params
+            const tarefa : DetailedTarefa  = req.body
 
-            const tarefaId = await this.tarefaRepository.addTarefa(personId, tarefa)
+            const tarefaId = await this.tarefaRepository.addTarefa(tarefa, parseInt(personId))
 
             res.status(201).json({ id: tarefaId })
         }
