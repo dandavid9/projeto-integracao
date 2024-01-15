@@ -41,7 +41,7 @@ export class TarefaRepository {
         )
     }
 
-    async deleteTarefas(tarefaId: number) {
+    async deleteTarefa(tarefaId: number) {
         await this.db.run(
             "DELETE FROM tarefa WHERE id_tarefa = ?",
             tarefaId

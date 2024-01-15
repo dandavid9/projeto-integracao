@@ -46,6 +46,20 @@ export class PersonRepository {
         })
     }
 
+    async getPerson(personId: number): Promise<Person> {
+        const record = await this.db.get(
+            "SELECT id_person, first_name, last_name, email FROM person WHERE id_person=?",
+            personId
+        )
+
+        return {
+          idPerson: record.id_person,
+          firstName: record.first_name,
+          lastName: record.last_name,
+          email: record.email
+        };
+    }
+
     async addPerson(person: Person): Promise<number | undefined> {
         const result = await this.db.run(
             "INSERT INTO person " +

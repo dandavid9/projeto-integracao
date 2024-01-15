@@ -31,17 +31,20 @@ export class StatusRepository {
     }
 
     async addStatus(status: Status) {
-        const result = await this.db.run("Insert into status(statusDesc) Values (?);",
-        status.statusDesc)
+        const result = await this.db.run("Insert into status(status_desc) Values (?);",
+            status.statusDesc)
         return result.lastID;
     }
 
     async deleteStatus(statusId: number) {
-        await this.db.run("DELETE FROM status WHERE id_status = ?", statusId)
+        await this.db.run(
+            "DELETE FROM status WHERE id_status = ?",
+            statusId
+        )
     }
 
-    async updateStatus(statusId: number){
-        await this.db.run("DELETE FROM status WHERE id_status = ?", statusId)
-    }
+    // async updateStatus(statusId: number){
+    //     await this.db.run("DELETE FROM status WHERE id_status = ?", statusId)
+    // }
 
 }

@@ -63,6 +63,48 @@ export class PersonController {
         }
     }
 
+    getPerson(): Handler {
+        return async (req: Request, res: Response) => {
+            const personId = parseInt(req.params.personId);
+
+            const person = await this.personRepository.getPerson(personId)
+
+            if (!person) {
+                return res.status(404).json()
+            }
+
+            const completePersonWithDetails = async (person: Person): Promise<DetailedPerson> => {
+                const result: DetailedPerson = {
+                    ...person,
+                    tarefas: []
+                }
+    
+                const tarefas = await this.tarefaRepository.findTarefaByPersonId(person.idPerson)
+    
+                result.tarefas = await Promise.all(tarefas.map(async tarefa => {
+                    const status = await this.statusRepository.findStatusById(tarefa.statusId);
+            
+                    return {
+                        id: tarefa.idTarefa,
+                        titulo: tarefa.titulo,
+                        descricao: tarefa.descricao,
+                        data: tarefa.data,
+                        status: {
+                            idStatus: status[0].idStatus,
+                            statusDesc: status[0].statusDesc
+                        }
+                    };
+                }));
+    
+                return result
+            }
+
+
+            res.status(200).json(await completePersonWithDetails(person))
+            
+        }
+    }
+
     addPerson(): Handler {
         return async (req: Request, res: Response) => {
             const person: DetailedPerson = req.body

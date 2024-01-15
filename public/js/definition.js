@@ -1,7 +1,6 @@
 import { DetailedTarefa } from "./DetailedTarefa.model";
 /**
  * @typedef Person
- * 
  * @property {number} idPerson
  * @property {string} firstName
  * @property {string} lastName
@@ -11,7 +10,6 @@ import { DetailedTarefa } from "./DetailedTarefa.model";
 
 /** 
  * @typedef Tarefa
- * 
  * @property {number} idTarefa
  * @property {string} titulo
  * @property {string} descricao
@@ -20,7 +18,6 @@ import { DetailedTarefa } from "./DetailedTarefa.model";
  * @property {number} personId
  * 
  * @typedef Status
- * 
  * @property {number} idStatus
  * @property {string} statusDesc
  */ 

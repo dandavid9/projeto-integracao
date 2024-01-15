@@ -25,7 +25,7 @@ export class TarefaController{
         return async (req: Request, res: Response) => {
             const tarefaId = parseInt(req.params.tarefaId)
 
-            await this.tarefaRepository.deleteTarefas(tarefaId)
+            await this.tarefaRepository.deleteTarefa(tarefaId)
 
             res.status(200).json()
         }
