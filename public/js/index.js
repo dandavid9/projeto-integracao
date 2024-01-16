@@ -6,7 +6,6 @@ let taskApi = new TaskApi()
 window.addEventListener("load", async () => {
     container = document.getElementById("container");
 
-
     taskApi.findPerson().then(addPersonsToSelect)
 
 
@@ -61,16 +60,64 @@ const showPerson = (person) => {
  * @param {Tarefa[]} tarefas
  */
 const showPersonTasks = (tarefas) => {
+    const divTarefa = document.createElement("div")
+        divTarefa.className = "wrapper";
     tarefas.forEach(tarefa => {
-        const divTarefa = document.createElement("div")
-        const titulo = document.createElement("h2")
-        titulo.innerText = "Titulo: " + tarefa.titulo
-        const descricao = document.createElement("h3")
-        descricao.innerText = "Descrição: " + tarefa.descricao
-        const data = document.createElement("h4")
-        data.innerText = "Data: " + tarefa.data
-        const status = document.createElement("h4")
-        status.innerText = "Status: " + tarefa.status.statusDesc
+    
+        const divNote = document.createElement("div")
+        divNote.className = "note";
+
+        const divSpiralPart = document.createElement("div")
+        divSpiralPart.className = "spiral-part";
+        
+        for (let i = 0; i <= 10; i++) {
+            const divSpiral = document.createElement("div")
+            divSpiral.className = "spiral";
+
+            const divHole = document.createElement("div")
+            divHole.className = "hole";
+            const divWire = document.createElement("div")
+            divWire.className = "wire";
+
+            divSpiral.appendChild(divHole);
+            divSpiral.appendChild(divWire);
+            divSpiralPart.appendChild(divSpiral);
+        }
+        const divNoteLines = document.createElement("div")
+        divNoteLines.className = "note-lines";
+
+        const divLineTitulo = document.createElement("div");
+        divLineTitulo.className = "line";
+        divLineTitulo.innerText = "Titulo: " + tarefa.titulo;
+
+        const divLineDescricao = document.createElement("div");
+        divLineDescricao.className = "line";
+        divLineDescricao.innerText = "Descrição: " + tarefa.descricao;
+
+        const divLineData = document.createElement("div");
+        divLineData.className = "line";
+        divLineData.innerText = "Data: " + tarefa.data;
+
+        const divLineStatus = document.createElement("div");
+        divLineStatus.className = "line";
+        divLineStatus.innerText =  "Status: " + tarefa.status.statusDesc;
+
+        divNoteLines.appendChild(divLineTitulo);
+        divNoteLines.appendChild(divLineDescricao);
+        divNoteLines.appendChild(divLineData);
+        divNoteLines.appendChild(divLineStatus);
+        
+        for (let i = 0; i <= 7; i++) {
+            const divLine = document.createElement("div");
+            divLine.className = "line";
+
+           divNoteLines.appendChild(divLine);
+        }
+            
+       divNote.appendChild(divSpiralPart);
+       divNote.appendChild(divNoteLines);
+       divTarefa.appendChild(divNote);
+
 
         const btnDelete = document.createElement("button")
         btnDelete.innerText = "DELETAR"
@@ -83,14 +130,8 @@ const showPersonTasks = (tarefas) => {
             }
         };
 
-        divTarefa.appendChild(titulo)
-        divTarefa.appendChild(descricao)
-        divTarefa.appendChild(data)
-        divTarefa.appendChild(status)
-        divTarefa.appendChild(btnDelete)
-        container.appendChild(divTarefa)
     })
-
+    container.appendChild(divTarefa)
 }
 
 const deletePerson = () => {
