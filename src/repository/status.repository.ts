@@ -36,13 +36,6 @@ export class StatusRepository {
         return result.lastID;
     }
 
-    async deleteStatus(statusId: number) {
-        await this.db.run(
-            "DELETE FROM status WHERE id_status = ?",
-            statusId
-        )
-    }
-
     // async updateStatus(statusId: number){
     //     await this.db.run("DELETE FROM status WHERE id_status = ?", statusId)
     // }

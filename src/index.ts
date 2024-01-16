@@ -49,7 +49,6 @@ api.post("/person/:personId/tarefa", tarefaController.addTarefa())
 api.delete("/tarefa/:tarefaId", tarefaController.deleteTarefa())
 //api.get("/status", statusController.findStatus())
 api.post("/status", statusController.addStatus())
-api.delete("/status/:statusId", statusController.deleteStatus())
 
 console.log("✈️ Starting express");
 api.listen(port, () => {

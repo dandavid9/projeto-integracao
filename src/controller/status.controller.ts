@@ -19,13 +19,4 @@ export class StatusController{
         }
     }
 
-    deleteStatus(): Handler {
-        return async (req: Request, res: Response) => {
-            const statusId = parseInt(req.params.statusId)
-
-            await this.statusRepository.deleteStatus(statusId)
-
-            res.status(200).json()
-        }
-    }
 }

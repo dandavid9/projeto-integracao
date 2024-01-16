@@ -60,17 +60,26 @@ const showPerson = (person) => {
  * @param {Tarefa[]} tarefas
  */
 const showPersonTasks = (tarefas) => {
-    const divTarefa = document.createElement("div")
-        divTarefa.className = "wrapper";
+    let notesCount = 0;
+
+    container = document.getElementById("container")
+
     tarefas.forEach(tarefa => {
-    
+
+        if (notesCount % 6 === 0) {
+            const divTarefa = document.createElement("div");
+            divTarefa.className = "wrapper";
+            container.appendChild(divTarefa);
+        }
+
+
         const divNote = document.createElement("div")
         divNote.className = "note";
 
         const divSpiralPart = document.createElement("div")
         divSpiralPart.className = "spiral-part";
-        
-        for (let i = 0; i <= 10; i++) {
+
+        for (let i = 0; i < 10; i++) {
             const divSpiral = document.createElement("div")
             divSpiral.className = "spiral";
 
@@ -100,38 +109,39 @@ const showPersonTasks = (tarefas) => {
 
         const divLineStatus = document.createElement("div");
         divLineStatus.className = "line";
-        divLineStatus.innerText =  "Status: " + tarefa.status.statusDesc;
+        divLineStatus.innerText = "Status: " + tarefa.status.statusDesc;
 
         divNoteLines.appendChild(divLineTitulo);
         divNoteLines.appendChild(divLineDescricao);
         divNoteLines.appendChild(divLineData);
         divNoteLines.appendChild(divLineStatus);
-        
-        for (let i = 0; i <= 7; i++) {
+
+        for (let i = 0; i < 8; i++) {
             const divLine = document.createElement("div");
             divLine.className = "line";
 
-           divNoteLines.appendChild(divLine);
+            divNoteLines.appendChild(divLine);
         }
-            
-       divNote.appendChild(divSpiralPart);
-       divNote.appendChild(divNoteLines);
-       divTarefa.appendChild(divNote);
-
 
         const btnDelete = document.createElement("button")
-        btnDelete.innerText = "DELETAR"
+        btnDelete.innerText = "DELETAR TAREFA"
         btnDelete.onclick = async () => {
             const confirmDelete = window.confirm("Tem certeza que deseja deletar esta tarefa?");
 
             if (confirmDelete) {
-            await taskApi.deleteTarefa(tarefa.id)
-            divTarefa.remove()
+                await taskApi.deleteTarefa(tarefa.id)
+                divNote.remove()
             }
-        };
+        }
 
+        const currentRow = container.lastChild;
+        divNote.appendChild(divSpiralPart);
+        divNote.appendChild(divNoteLines);
+        divNote.appendChild(btnDelete)
+        currentRow.appendChild(divNote);
+        notesCount++;
+        container.appendChild(currentRow)
     })
-    container.appendChild(divTarefa)
 }
 
 const deletePerson = () => {

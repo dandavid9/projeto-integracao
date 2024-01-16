@@ -1,1 +1,1 @@
-SELECT * from tarefa
+SELECT * from status

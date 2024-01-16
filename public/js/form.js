@@ -2,6 +2,7 @@
 
 class Form {
 
+    
     constructor() {
     }
 
@@ -79,9 +80,22 @@ class Form {
 
         const statusLabel = document.createElement("label")
         statusLabel.innerText = "Status"
-        const statusInput = document.createElement("input")
-        statusInput.name = "status"
-        statusInput.required = true
+        const statusSelect = document.createElement("select")
+        statusSelect.name = "status"
+        const option1 = document.createElement("option")
+        option1.text = "Pendente"
+        option1.value = 2
+        const option2 = document.createElement("option")
+        option2.text = "Em progresso"
+        option2.value = 3
+        const option3 = document.createElement("option")
+        option3.text = "Completa"
+        option3.value = 1
+
+        statusSelect.appendChild(option1)
+        statusSelect.appendChild(option2)
+        statusSelect.appendChild(option3)
+
 
         const submitButton = document.createElement("input")
         submitButton.value = "Criar"
@@ -94,7 +108,7 @@ class Form {
         form.appendChild(dataLabel)
         form.appendChild(dataInput)
         form.appendChild(statusLabel)
-        form.appendChild(statusInput)
+        form.appendChild(statusSelect)
         form.appendChild(submitButton)
 
         form.onsubmit = (ev) => {
@@ -104,7 +118,7 @@ class Form {
                 titulo: tituloInput.value,
                 descricao: descricaoInput.value,
                 data: dataInput.value,
-                statusId: statusInput.value,
+                statusId: statusSelect.value,
             }
 
             onSubmitCallback(tarefaToCreate)
