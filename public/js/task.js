@@ -59,6 +59,17 @@ class TaskApi {
         return (await req).json();
     }
 
+    async updateTarefa(tarefaId, statusId) {
+        const req = fetch(`http://localhost:3000/tarefa/${tarefaId}/${statusId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+
+        return (await req).json();
+    }
+
     async deleteTarefa(tarefaId) {
         fetch(`http://localhost:3000/tarefa/${tarefaId}`, {
             method: "DELETE",

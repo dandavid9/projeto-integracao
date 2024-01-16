@@ -48,9 +48,11 @@ export class TarefaRepository {
         )
     }
 
-    /*
-    async updateTarefa(tarefaId: number){
-        
+    async updateTarefa(tarefaId: number, statusId: number){
+        await this.db.run(
+            "UPDATE tarefa SET status_id = ? WHERE id_tarefa = ?",
+            statusId,
+            tarefaId
+        )
     }
-    */
 }
