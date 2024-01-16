@@ -46,6 +46,10 @@ class TaskApi {
         return (await req).json();
     }
 
+    async getTarefasByPerson(personId) {
+        return (await fetch(`http://localhost:3000/person/${personId}/tarefa`)).json()
+    }
+
     async createTarefa(personId, value) {
         const req = fetch(`http://localhost:3000/person/${personId}/tarefa`, {
             method: "POST",

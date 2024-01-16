@@ -1,19 +1,48 @@
 import { Handler, Request, Response } from "express";
 import { TarefaRepository } from "../repository/tarefa.repository";
-import { Tarefa } from "../model/Tarefa.model";
 import { DetailedTarefa } from "../model/dto/DetailedTarefa.model";
+import { StatusRepository } from "../repository/status.repository";
+import { Tarefa } from "../../public/js/definition";
 
-export class TarefaController{
+export class TarefaController {
     private tarefaRepository: TarefaRepository;
+    private statusRepository: StatusRepository;
 
-    constructor(tarefaRepository: TarefaRepository){
-        this.tarefaRepository = tarefaRepository
+    constructor(tarefaRepository: TarefaRepository, statusRepository: StatusRepository) {
+        this.tarefaRepository = tarefaRepository,
+            this.statusRepository = statusRepository
     }
 
-    addTarefa(): Handler{
-        return async (req: Request, res:Response)=>{
+    findTarefa(): Handler {
+        return async (req: Request, res: Response) => {
             const { personId } = req.params
-            const tarefa : DetailedTarefa  = req.body
+
+            const tarefas = await this.tarefaRepository.findTarefaByPersonId(parseInt(personId))
+
+            const result = await Promise.all(tarefas.map(async tarefa => {
+                const status = await this.statusRepository.findStatusById(tarefa.statusId);
+
+                return {
+                    id: tarefa.idTarefa,
+                    titulo: tarefa.titulo,
+                    descricao: tarefa.descricao,
+                    data: tarefa.data,
+                    status: {
+                        idStatus: status[0].idStatus,
+                        statusDesc: status[0].statusDesc
+                    }
+                };
+            }));
+
+            res.status(200).json(result)
+        }
+
+    }
+
+    addTarefa(): Handler {
+        return async (req: Request, res: Response) => {
+            const { personId } = req.params
+            const tarefa: DetailedTarefa = req.body
 
             const tarefaId = await this.tarefaRepository.addTarefa(tarefa, parseInt(personId))
 

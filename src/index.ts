@@ -25,7 +25,7 @@ const personController = new PersonController(
     tarefaRepository,
     statusRepository
 )
-const tarefaController = new TarefaController(tarefaRepository)
+const tarefaController = new TarefaController(tarefaRepository, statusRepository)
 const statusController = new StatusController(statusRepository)
 
 
@@ -44,7 +44,7 @@ api.get("/person", personController.findPersons())
 api.get("/person/:personId", personController.getPerson());
 api.post("/person", personController.addPerson())
 api.delete("/person/:personId", personController.deletePerson())
-//api.get("/tarefa", tarefaController.findTarefas())
+api.get("/person/:personId/tarefa", tarefaController.findTarefa())
 api.post("/person/:personId/tarefa", tarefaController.addTarefa())
 api.delete("/tarefa/:tarefaId", tarefaController.deleteTarefa())
 //api.get("/status", statusController.findStatus())
