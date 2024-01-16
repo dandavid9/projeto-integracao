@@ -34,16 +34,13 @@ class TaskApi {
         return (await req).json();
     }
 
-    async deletePerson(personId, value) {
-        const req = fetch(`http://localhost:3000/person/${personId}`, {
+    async deletePerson(personId) {
+        fetch(`http://localhost:3000/person/${personId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-            },
-            body: JSON.stringify(value),
+            }
         });
-
-        return (await req).json();
     }
 
     async getTarefasByPerson(personId) {
@@ -62,16 +59,13 @@ class TaskApi {
         return (await req).json();
     }
 
-    async deleteTarefa(tarefaId, idvalue) {
-        const req = fetch(`http://localhost:3000/tarefa/${tarefaId}`, {
+    async deleteTarefa(tarefaId) {
+        fetch(`http://localhost:3000/tarefa/${tarefaId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-            },
-            body: JSON.stringify(value),
+            }
         });
-
-        return (await req).json();
     }
 
 }
