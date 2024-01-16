@@ -134,11 +134,11 @@ const showPersonTasks = (tarefas) => {
             }
         }
 
-        
+
 
         const selectUpdate = document.createElement("select")
         const option0 = document.createElement("option")
-        option0.text = "Alterar Status"
+        option0.text = "-- Alterar Status --"
         option0.disabled = true
         option0.defaultSelected = true
         const option1 = document.createElement("option")
@@ -156,11 +156,9 @@ const showPersonTasks = (tarefas) => {
         selectUpdate.appendChild(option2)
         selectUpdate.appendChild(option3)
 
-        selectUpdate.onsubmit = async () => {
-            await taskApi.updateTarefa(tarefa.id, selectUpdate.value)
-
-            console.log(selectUpdate.value);
-
+        selectUpdate.onchange = async () => {
+            await taskApi.updateTarefa(selectUpdate.value, tarefa.id)
+            divLineStatus.innerText = "Status: " + selectUpdate.options[selectUpdate.selectedIndex].text
         }
 
         const currentRow = container.lastChild;

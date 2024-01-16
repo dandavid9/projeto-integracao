@@ -62,10 +62,11 @@ export class TarefaController {
 
     updateTarefa(): Handler {
         return async (req: Request, res: Response) => {
-            const { tarefaId, statusId } = req.params;
+            const { statusId, tarefaId } = req.params;
 
-            const tarefaIdNumber = parseInt(tarefaId);
             const statusIdNumber = parseInt(statusId);
+            const tarefaIdNumber = parseInt(tarefaId);
+
 
 
             await this.tarefaRepository.updateTarefa(statusIdNumber, tarefaIdNumber);

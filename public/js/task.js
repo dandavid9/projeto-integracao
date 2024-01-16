@@ -59,7 +59,7 @@ class TaskApi {
         return (await req).json();
     }
 
-    async updateTarefa(tarefaId, statusId) {
+    async updateTarefa(statusId, tarefaId) {
         const req = fetch(`http://localhost:3000/tarefa/${tarefaId}/${statusId}`, {
             method: "PUT",
             headers: {

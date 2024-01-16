@@ -11,26 +11,26 @@ export class TarefaRepository {
     async findTarefaByPersonId(personId: number | undefined) {
         const records = await this.db.all('SELECT * FROM TAREFA Where person_id = ?', personId);
 
-        return records.map((record) :Tarefa => {
+        return records.map((record): Tarefa => {
             return {
-                idTarefa : record.id_tarefa,
-                titulo : record.titulo,
-                descricao : record.descricao,
+                idTarefa: record.id_tarefa,
+                titulo: record.titulo,
+                descricao: record.descricao,
                 data: record.data_tarefa,
                 statusId: record.status_id
-                
+
             }
         })
     }
 
     async addTarefa(tarefa: Tarefa, personId): Promise<number | undefined> {
         const result = await this.db.run("Insert into tarefa (titulo, descricao, data_tarefa, status_id, person_id)" +
-        " values (?, ?, ?, ?, ?)",
-        tarefa.titulo,
-        tarefa.descricao,
-        tarefa.data,
-        tarefa.statusId,
-        personId);
+            " values (?, ?, ?, ?, ?)",
+            tarefa.titulo,
+            tarefa.descricao,
+            tarefa.data,
+            tarefa.statusId,
+            personId);
         return result.lastID;
     }
 
@@ -48,7 +48,7 @@ export class TarefaRepository {
         )
     }
 
-    async updateTarefa(tarefaId: number, statusId: number){
+    async updateTarefa(statusId: number, tarefaId: number) {
         await this.db.run(
             "UPDATE tarefa SET status_id = ? WHERE id_tarefa = ?",
             statusId,
