@@ -31,12 +31,33 @@ const addPersonsToSelect = (persons) => {
         taskApi.getPerson(select.value).then(showForm);
     }
 }
+let tarefaForm;
+const updateFormWithPerson = (person) => {
+    // Se o formulário ainda não foi criado, crie-o
+    if (!tarefaForm) {
+        tarefaForm = formManager.createTarefaForm((tarefaToCreate) => {
+            taskApi.createTarefa(person.idPerson, tarefaToCreate);
+            tarefaForm.reset();
+        });
+        // Adicione o formulário ao DOM ou aonde for necessário
+        const container = document.getElementById("container");
+        container.appendChild(tarefaForm);
+    }
+};
 
+const initialSelectedPersonId = "1";
+taskApi.getPerson(initialSelectedPersonId).then((initialPerson) => {
+    updateFormWithPerson(initialPerson);
+});
 const onPersonChange = () => {
-    const select = document.getElementById("person")
-    console.log(select.value)
+    const select = document.getElementById("person");
+    const selectedPersonId = select.value;
 
-    taskApi.getPerson(select.value).then(showForm)
+    // Obtenha os detalhes da pessoa com base no ID selecionado
+    taskApi.getPerson(selectedPersonId).then((person) => {
+        // Atualize o formulário com base na pessoa selecionada
+        updateFormWithPerson(person);
+    });
 
 }
 
@@ -45,20 +66,8 @@ const onPersonChange = () => {
  * @param {Person} person
  */
 const showForm = (person) => {
-    container.innerText = ""
-
-    const texto = document.createElement("h2")
-    texto.innerText = "Criar tarefa para: " + person.firstName + " " + person.lastName
-
-    const tarefaDiv = document.createElement("div");
     const tarefaForm = formManager.createTarefaForm((tarefaToCreate) => {
         taskApi.createTarefa(person.idPerson, tarefaToCreate);
         tarefaForm.reset();
     });
-
-    tarefaDiv.appendChild(tarefaForm);
-    container.appendChild(texto)
-    container.appendChild(tarefaDiv)
-
-
 }

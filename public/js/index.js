@@ -46,6 +46,7 @@ const onPersonChange = () => {
 const showPerson = (person) => {
     container.innerText = ""
     const nome = document.createElement("h1")
+    nome.className = "name";
     nome.innerText = person.firstName + " " + person.lastName
 
     container.appendChild(nome)

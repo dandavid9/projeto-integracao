@@ -4,6 +4,15 @@ html {
   font-size: 10px;
 }
 
+main{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; 
+}
+.name{
+  text-align: center;
+  font-size: 30px;
+}
 .wrapper {
   margin-bottom: 20px;
   display: flex;
@@ -16,6 +25,7 @@ html {
     background-color: #FEFDF8;
     border: 0.6rem solid #1A6EB4;
     margin-right: 20px;
+    margin: 0 10px;
     height: fit-content;
     z-index: 1;
 
