@@ -7,37 +7,77 @@ class Form {
     }
 
     createPersonForm(onSubmitCallback) {
+        const divContainer = document.getElementById("container")
         const form = document.createElement("form")
+        form.id = "personForm";
 
+        const h2Person = document.createElement("h2");
+        h2Person.innerText = "Adicionar Pessoa";
+        h2Person.className = "person";
+
+        const divPersonGroup1 = document.createElement("div")
+        divPersonGroup1.className = "form-group";
         const firstNameLabel = document.createElement("label")
-        firstNameLabel.innerText = "Primeiro Nome"
+        firstNameLabel.innerText = "Primeiro Nome:"
+        firstNameLabel.setAttribute("for", "firstName");
         const firstNameInput = document.createElement("input")
+        firstNameInput.type = "text";
+        firstNameInput.id = "firstName";
+        firstNameInput.name = "firstName";
         firstNameInput.required = true
+        divPersonGroup1.appendChild(firstNameLabel)
+        divPersonGroup1.appendChild(firstNameInput)
 
+        
+        const divPersonGroup2 = document.createElement("div")
+        divPersonGroup2.className = "form-group";
         const lastNameLabel = document.createElement("label")
-        lastNameLabel.innerText = "Ultimo Nome"
+        lastNameLabel.innerText = "Último Nome:"
+        lastNameLabel.setAttribute("for", "lastName");
         const lastNameInput = document.createElement("input")
+        lastNameInput.type = "text";
+        lastNameInput.id = "lastName";
+        lastNameInput.name = "lastName";
         lastNameInput.required = true
 
+        divPersonGroup2.appendChild(lastNameLabel)
+        divPersonGroup2.appendChild(lastNameInput)
+
+
+        const divPersonGroup3 = document.createElement("div")
+        divPersonGroup3.className = "form-group";
         const emailLabel = document.createElement("label")
-        emailLabel.innerText = "Email"
+        emailLabel.innerText = "E-mail:"
+        emailLabel.setAttribute("for", "email");
         const emailInput = document.createElement("input")
+        emailInput.type = "email";
+        emailInput.id = "email";
+        emailInput.name = "email";
         emailInput.required = true
 
-        const submitButton = document.createElement("input")
-        submitButton.value = "Criar"
+        divPersonGroup3.appendChild(emailLabel)
+        divPersonGroup3.appendChild(emailInput)
+
+        const divLinks  = document.createElement("div");
+        divLinks.className = "baixo";
+        const submitButton = document.createElement("button")
         submitButton.type = "submit"
+        submitButton.innerText = "Adicionar Pessoa"
+        
+        const linkPerson = document.createElement("a");
+        linkPerson.href = "index.html";
+        linkPerson.innerText = "Ver Tarefas";
 
-        form.appendChild(firstNameLabel)
-        form.appendChild(firstNameInput)
-        form.appendChild(lastNameLabel)
-        form.appendChild(lastNameInput)
-        form.appendChild(emailLabel)
-        form.appendChild(emailInput)
-        form.appendChild(submitButton)
+        divLinks.appendChild(submitButton)
+        divLinks.appendChild(linkPerson)
 
+        form.appendChild(h2Person)
+        form.appendChild(divPersonGroup1)
+        form.appendChild(divPersonGroup2)
+        form.appendChild(divPersonGroup3)
+        form.appendChild(divLinks)
 
-
+        divContainer.appendChild(form)
 
         form.onsubmit = async (ev) => {
             ev.preventDefault();
