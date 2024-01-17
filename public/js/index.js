@@ -125,7 +125,7 @@ const showPersonTasks = (tarefas) => {
         }
 
         const btnDelete = document.createElement("button")
-        btnDelete.innerText = "DELETAR TAREFA"
+        btnDelete.innerText = "X"
         btnDelete.onclick = async () => {
             const confirmDelete = window.confirm("Tem certeza que deseja deletar esta tarefa?");
 
@@ -135,9 +135,37 @@ const showPersonTasks = (tarefas) => {
             }
         }
 
+
+
+        const selectUpdate = document.createElement("select")
+        const option0 = document.createElement("option")
+        option0.text = "-- Alterar Status --"
+        option0.disabled = true
+        option0.defaultSelected = true
+        const option1 = document.createElement("option")
+        option1.text = "Pendente"
+        option1.value = 2
+        const option2 = document.createElement("option")
+        option2.text = "Em progresso"
+        option2.value = 3
+        const option3 = document.createElement("option")
+        option3.text = "Completa"
+        option3.value = 1
+
+        selectUpdate.appendChild(option0)
+        selectUpdate.appendChild(option1)
+        selectUpdate.appendChild(option2)
+        selectUpdate.appendChild(option3)
+
+        selectUpdate.onchange = async () => {
+            await taskApi.updateTarefa(selectUpdate.value, tarefa.id)
+            divLineStatus.innerText = "Status: " + selectUpdate.options[selectUpdate.selectedIndex].text
+        }
+
         const currentRow = container.lastChild;
         divNote.appendChild(divSpiralPart);
         divNote.appendChild(divNoteLines);
+        divNote.appendChild(selectUpdate)
         divNote.appendChild(btnDelete)
         currentRow.appendChild(divNote);
         notesCount++;

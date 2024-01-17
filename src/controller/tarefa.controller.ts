@@ -59,4 +59,20 @@ export class TarefaController {
             res.status(200).json()
         }
     }
+
+    updateTarefa(): Handler {
+        return async (req: Request, res: Response) => {
+            const { statusId, tarefaId } = req.params;
+
+            const statusIdNumber = parseInt(statusId);
+            const tarefaIdNumber = parseInt(tarefaId);
+
+
+
+            await this.tarefaRepository.updateTarefa(statusIdNumber, tarefaIdNumber);
+
+            res.status(200).json({ message: 'Tarefa atualizada com sucesso.' });
+
+        }
+    }
 }
